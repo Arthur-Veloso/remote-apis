@@ -10,7 +10,7 @@
 <style>
 
 body{
-font-family:Arial, sans-serif;
+font-family: Arial, sans-serif;
 margin:0;
 padding:20px;
 background:#f4f4f4;
@@ -24,13 +24,21 @@ padding:10px 15px;
 margin:10px;
 font-size:16px;
 cursor:pointer;
+border-radius:6px;
+border:none;
+background:#4CAF50;
+color:white;
 }
 
-/* Grid layout for results */
+button:hover{
+background:#45a049;
+}
+
+/* Grid layout */
 
 #results{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 margin-top:20px;
 }
@@ -41,12 +49,18 @@ margin-top:20px;
 background:white;
 padding:15px;
 border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+text-align:center;
 }
 
-img{
+/* Images */
+
+.card img{
 width:100%;
+height:130px;
+object-fit:cover;
 border-radius:8px;
+margin-bottom:10px;
 }
 
 </style>
@@ -63,14 +77,16 @@ border-radius:8px;
 
 <br><br>
 
-<!-- Dropdown for region -->
+<!-- Region selector -->
+
 <select id="regionSelect">
 <option value="europe">Europe</option>
 <option value="asia">Asia</option>
 <option value="africa">Africa</option>
 </select>
 
-<!-- Search box for characters -->
+<!-- Character search -->
+
 <input type="text" id="characterSearch" placeholder="Search character">
 
 <div id="results"></div>
@@ -85,6 +101,7 @@ const charactersBtn = document.getElementById("charactersBtn");
 
 const regionSelect = document.getElementById("regionSelect");
 const characterSearch = document.getElementById("characterSearch");
+
 
 /* Fetch countries */
 
@@ -108,6 +125,7 @@ console.log("Error loading countries", error);
 
 }
 
+
 /* Fetch users */
 
 async function fetchUsers(){
@@ -128,6 +146,7 @@ console.log("Error loading users", error);
 
 }
 
+
 /* Fetch characters */
 
 async function fetchCharacters(){
@@ -144,18 +163,17 @@ displayCharacters(data.results);
 
 }catch(error){
 
-console.log("Error loading characters", error);
+results.innerHTML = "<p>No characters found.</p>";
 
 }
 
 }
+
 
 /* Event listeners */
 
 countriesBtn.addEventListener("click", fetchCountries);
-
 usersBtn.addEventListener("click", fetchUsers);
-
 charactersBtn.addEventListener("click", fetchCharacters);
 
 
@@ -171,9 +189,10 @@ const card = document.createElement("div");
 card.className = "card";
 
 card.innerHTML = `
+<img src="${country.flags.png}" alt="${country.name.common} flag">
 <h3>${country.name.common}</h3>
-<p>Capital: ${country.capital}</p>
-<p>Population: ${country.population}</p>
+<p><strong>Capital:</strong> ${country.capital ? country.capital[0] : "N/A"}</p>
+<p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
 `;
 
 results.appendChild(card);
@@ -181,6 +200,7 @@ results.appendChild(card);
 });
 
 }
+
 
 /* Display users */
 
@@ -195,8 +215,8 @@ card.className = "card";
 
 card.innerHTML = `
 <h3>${user.name}</h3>
-<p>Email: ${user.email}</p>
-<p>City: ${user.address.city}</p>
+<p><strong>Email:</strong> ${user.email}</p>
+<p><strong>City:</strong> ${user.address.city}</p>
 `;
 
 results.appendChild(card);
@@ -204,6 +224,7 @@ results.appendChild(card);
 });
 
 }
+
 
 /* Display characters */
 
@@ -217,9 +238,9 @@ const card = document.createElement("div");
 card.className = "card";
 
 card.innerHTML = `
-<img src="${character.image}">
+<img src="${character.image}" alt="${character.name}">
 <h3>${character.name}</h3>
-<p>Status: ${character.status}</p>
+<p><strong>Status:</strong> ${character.status}</p>
 `;
 
 results.appendChild(card);
@@ -229,10 +250,6 @@ results.appendChild(card);
 }
 
 </script>
-
-
-
-
 
 </body>
 </html>
