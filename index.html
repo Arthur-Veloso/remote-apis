@@ -158,7 +158,81 @@ usersBtn.addEventListener("click", fetchUsers);
 
 charactersBtn.addEventListener("click", fetchCharacters);
 
+
+/* Display countries */
+
+function displayCountries(countries){
+
+results.innerHTML = "";
+
+countries.forEach(country => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<h3>${country.name.common}</h3>
+<p>Capital: ${country.capital}</p>
+<p>Population: ${country.population}</p>
+`;
+
+results.appendChild(card);
+
+});
+
+}
+
+/* Display users */
+
+function displayUsers(users){
+
+results.innerHTML = "";
+
+users.forEach(user => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<h3>${user.name}</h3>
+<p>Email: ${user.email}</p>
+<p>City: ${user.address.city}</p>
+`;
+
+results.appendChild(card);
+
+});
+
+}
+
+/* Display characters */
+
+function displayCharacters(characters){
+
+results.innerHTML = "";
+
+characters.forEach(character => {
+
+const card = document.createElement("div");
+card.className = "card";
+
+card.innerHTML = `
+<img src="${character.image}">
+<h3>${character.name}</h3>
+<p>Status: ${character.status}</p>
+`;
+
+results.appendChild(card);
+
+});
+
+}
+
 </script>
+
+
+
+
 
 </body>
 </html>
